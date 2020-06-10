@@ -12,3 +12,9 @@ exports.toTheDojo = functions.https.onRequest((req,res,) => {
 
     res.redirect('https://www.tengezastudios.co.ke');
 });
+
+//http request 3
+exports.sayHello = functions.https.onCall((data, context) => {
+    const name = data.name;
+    return `niaje, ${name}`;
+})
