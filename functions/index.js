@@ -1,20 +1,13 @@
 const functions = require('firebase-functions');
 
-// http request 1
-exports.randomNumber = functions.https.onRequest((req,res,) => {
-    const number = Math.round(Math.random()* 100);
-
-    res.send(number.toString());
+// auth trigger for new user sign up
+exports.newUserSignUp = functions.auth.user()
+.onCreate(user => {
+    console.log(`User created`, user.email, user.uid);
 });
 
-// http request 2
-exports.toTheDojo = functions.https.onRequest((req,res,) => {
-
-    res.redirect('https://www.tengezastudios.co.ke');
+//auth trigger for deleted user
+exports.userDeleted = functions.auth.user()
+.onDelete(user => {
+    console.log(`User deleted`, user.email, user.uid);
 });
-
-//http request 3
-exports.sayHello = functions.https.onCall((data, context) => {
-    const name = data.name;
-    return `niaje, ${name}`;
-})
