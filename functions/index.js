@@ -1,13 +1,11 @@
 const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+const VirtualLearning = require('./virtualLearningParents.model');
+admin.initializeApp();
 
-// auth trigger for new user sign up
-exports.newUserSignUp = functions.auth.user()
-.onCreate(user => {
-    console.log(`User created`, user.email, user.uid);
-});
-
-//auth trigger for deleted user
-exports.userDeleted = functions.auth.user()
-.onDelete(user => {
-    console.log(`User deleted`, user.email, user.uid);
-});
+exports.registerLearner = functions.https.onRequest((req, res) => {
+    let learner = new VirtualLearning(req.body);
+    learner.save()
+    console.log('Success');
+    res.send('Succesfully registered virtual learner' + res);
+  });
